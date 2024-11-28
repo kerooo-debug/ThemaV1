@@ -62,7 +62,7 @@ check_token() {
   echo -e "${YELLOW}MASUKAN AKSES TOKEN :${NC}"
   read -r USER_TOKEN
 
-  if [ "$USER_TOKEN" = "Hz2XkpaaGwvv17GwcEhkgO0" ]; then
+  if [ "$USER_TOKEN" = "VaqYuMen" ]; then
     echo -e "${GREEN}AKSES BERHASIL${NC}}"
   else
     echo -e "${GREEN}Yah token nya expired, Beli dulu di Ahmad ya${NC}"
@@ -84,15 +84,15 @@ install_theme() {
     echo -e "${BLUE}[+] =============================================== [+]${NC}"
     echo -e "                                                       "
     echo -e "PILIH THEME YANG INGIN DI INSTALL"
-    echo "1. stellar"
-    echo "2. billing"
-    echo "3. enigma"
+    echo "1. Stellar"
+    echo "2. Billing"
+    echo "3. Enigma"
     echo "x. kembali"
     echo -e "masukan pilihan (1/2/3/x) :"
     read -r SELECT_THEME
     case "$SELECT_THEME" in
       1)
-        THEME_URL=$(echo -e "https://github.com/AhmadXCerberus/Thema/raw/main/C2.zip")
+        THEME_URL=$(echo -e "https://github.com/kerooo-debug/Thema/raw/main/C2.zip")
         break
         ;;
       2)
@@ -100,7 +100,7 @@ install_theme() {
         break
         ;;
       3)
-        THEME_URL=$(echo -e "https://github.com/AhmadXCerberus/Thema/raw/main/C3.zip")
+        THEME_URL=$(echo -e "https://github.com/kerooo-debug/Thema/raw/main/C3.zip")
         break
         ;; 
       x)
@@ -226,7 +226,7 @@ uninstall_theme() {
   echo -e "${BLUE}[+]                    DELETE THEME                 [+]${NC}"
   echo -e "${BLUE}[+] =============================================== [+]${NC}"
   echo -e "                                                       "
-  bash <(curl https://raw.githubusercontent.com/AhmadXCerberus/Thema/main/repair.sh)
+  bash <(curl https://raw.githubusercontent.com/kerooo-debug/Thema/main/repair.sh)
   echo -e "                                                       "
   echo -e "${GREEN}[+] =============================================== [+]${NC}"
   echo -e "${GREEN}[+]                 DELETE THEME SUKSES             [+]${NC}"
@@ -245,7 +245,7 @@ echo -e "${BLUE}[+] =============================================== [+]${NC}"
 echo -e "                                                                   "
 
 # Unduh file tema
-wget -O /root/C2.zip https://github.com/AhmadXCerberus/Thema/raw/main/C2.zip
+wget -O /root/C2.zip https://github.com/kerooo-debug/Thema/raw/main/C2.zip
 
 # Ekstrak file tema
 unzip /root/C2.zip -d /root/pterodactyl
@@ -460,8 +460,8 @@ bash <(curl -s https://pterodactyl-installer.se) <<EOF
 \n
 pw
 Asia/Jakarta
-admin@gmail.com
-admin@gmail.com
+admin@cicadas.com
+admin@cicadas.com
 nama
 nama
 nama
@@ -483,7 +483,7 @@ pw
 y
 nodesubdo
 y
-admin@gmail.com
+admin@cicadas.com
 y
 EOF
 
