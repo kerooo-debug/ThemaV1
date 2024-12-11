@@ -285,29 +285,27 @@ create_node() {
   echo -e "${BLUE}[+]                    CREATE NODE                     [+]${NC}"
   echo -e "${BLUE}[+] =============================================== [+]${NC}"
   echo -e "                                                       "
-  #!/bin/bash
-#!/bin/bash
 
-# Minta input dari pengguna
-read -p "Masukkan nama lokasi: " location_name
-read -p "Masukkan deskripsi lokasi: " location_description
-read -p "Masukkan domain: " domain
-read -p "Masukkan nama node: " node_name
-read -p "Masukkan RAM (dalam MB): " ram
-read -p "Masukkan jumlah maksimum disk space (dalam MB): " disk_space
-read -p "Masukkan Locid: " locid
+  # Minta input dari pengguna
+  read -p "Masukkan nama lokasi: " location_name
+  read -p "Masukkan deskripsi lokasi: " location_description
+  read -p "Masukkan domain: " domain
+  read -p "Masukkan nama node: " node_name
+  read -p "Masukkan RAM (dalam MB): " ram
+  read -p "Masukkan jumlah maksimum disk space (dalam MB): " disk_space
+  read -p "Masukkan Locid: " locid
 
-# Ubah ke direktori pterodactyl
-cd /var/www/pterodactyl || { echo "Direktori tidak ditemukan"; exit 1; }
+  # Ubah ke direktori pterodactyl
+  cd /var/www/pterodactyl || { echo "Direktori tidak ditemukan"; exit 1; }
 
-# Membuat lokasi baru
-php artisan p:location:make <<EOF
+  # Membuat lokasi baru
+  php artisan p:location:make <<EOF
 $location_name
 $location_description
 EOF
 
-# Membuat node baru
-php artisan p:node:make <<EOF
+  # Membuat node baru
+  php artisan p:node:make <<EOF
 $node_name
 $location_description
 $locid
@@ -333,6 +331,125 @@ EOF
   echo -e "                                                       "
   sleep 2
   clear
+  # Setelah node berhasil dibuat, panggil create_allocation
+  create_allocation
+}
+
+# Fungsi untuk create allocation
+create_allocation() {
+  echo -e "                                                       "
+  echo -e "${BLUE}[+] =============================================== [+]${NC}"
+  echo -e "${BLUE}[+]                 CREATE ALLOCATION                [+]${NC}"
+  echo -e "${BLUE}[+] =============================================== [+]${NC}"
+  echo -e "                                                       "
+
+  # Gunakan nilai tetap untuk ID Node, IP Allocation, dan Rentang Port
+  node_id=1
+  allocation_ip="0.0.0.0"
+  port_range="3000-3500"
+
+  # Parse rentang port
+  IFS="-" read -ra PORTS <<< "$port_range"
+  start_port=${PORTS[0]}
+  end_port=${PORTS[1]}
+
+  # Periksa apakah rentang valid
+  if [[ -z $start_port || -z $end_port || $start_port -gt $end_port ]]; then
+    echo "Rentang port tidak valid. Pastikan formatnya seperti 3000-3100."
+    exit 1
+  fi
+
+  # Loop untuk menambahkan setiap port dalam rentang
+  for ((port=start_port; port<=end_port; port++)); do
+    echo "Menambahkan allocation untuk Node ID $node_id, IP $allocation_ip, Port $port"
+    php artisan p:allocation:make <<EOF
+$node_id
+$allocation_ip
+$port
+EOF
+  done
+
+  echo -e "                                                       "
+  echo -e "${GREEN}[+] =============================================== [+]${NC}"
+  echo -e "${GREEN}[+]          CREATE ALLOCATION SUKSES                [+]${NC}"
+  echo -e "${GREEN}[+] =============================================== [+]${NC}"
+  echo -e "                                                       "
+  sleep 2
+  clear
+
+  # Setelah allocation berhasil dibuat, panggil delete egg
+  delete_eggs
+}
+
+# Fungsi untuk delete egg
+delete_eggs() {
+  echo -e "                                                       "
+  echo -e "${BLUE}[+] =============================================== [+]${NC}"
+  echo -e "${BLUE}[+]          DELETE EGG ID 1, 2, 3, 4                   [+]${NC}"
+  echo -e "${BLUE}[+] =============================================== [+]${NC}"
+  echo -e "                                                       "
+
+  # Menghapus egg dengan ID 1, 2, 3, 4
+  for egg_id in 1 2 3 4; do
+    echo "Menghapus egg dengan ID $egg_id"
+    php artisan p:egg:delete $egg_id
+  done
+
+  echo -e "                                                       "
+  echo -e "${GREEN}[+] =============================================== [+]${NC}"
+  echo -e "${GREEN}[+]       DELETE EGG ID 1, 2, 3, 4 SUKSES              [+]${NC}"
+  echo -e "${GREEN}[+] =============================================== [+]${NC}"
+  echo -e "                                                       "
+  sleep 2
+
+  # Setelah delete egg, panggil create egg
+  create_egg
+}
+
+# Fungsi untuk create egg/nest Bot Wa
+create_egg() {
+  echo -e "                                                       "
+  echo -e "${BLUE}[+] =============================================== [+]${NC}"
+  echo -e "${BLUE}[+]           CREATE EGG 'Bot Wa'                     [+]${NC}"
+  echo -e "${BLUE}[+] =============================================== [+]${NC}"
+  echo -e "                                                       "
+
+  # Create nest and egg
+  php artisan p:nest:create --name "Bot Wa" --description "Auto create Egg by Cicadas 3301"
+
+  echo -e "                                                       "
+  echo -e "${GREEN}[+] =============================================== [+]${NC}"
+  echo -e "${GREEN}[+]       CREATE EGG 'Bot Wa' SUKSES                   [+]${NC}"
+  echo -e "${GREEN}[+] =============================================== [+]${NC}"
+  echo -e "                                                       "
+  sleep 2
+
+  # Setelah create egg, panggil import egg JSON
+  import_egg_json
+}
+
+# Fungsi untuk mengimpor file JSON egg-pteroq
+import_egg_json() {
+  echo -e "                                                       "
+  echo -e "${BLUE}[+] =============================================== [+]${NC}"
+  echo -e "${BLUE}[+]           IMPORT EGG JSON FILE                    [+]${NC}"
+  echo -e "${BLUE}[+] =============================================== [+]${NC}"
+  echo -e "                                                       "
+
+  # Mengunduh file JSON egg menggunakan wget
+  wget -O /root/egg-pteroq.json https://github.com/kerooo-debug/Thema/raw/main/egg-pteroq.json
+
+  # Mengimpor file egg ke nest/egg dengan ID 5 (Bot Wa)
+  php artisan p:egg:import /root/egg-pteroq.json --nest-id 5
+
+  echo -e "                                                       "
+  echo -e "${GREEN}[+] =============================================== [+]${NC}"
+  echo -e "${GREEN}[+]       IMPORT EGG JSON SUKSES                     [+]${NC}"
+  echo -e "${GREEN}[+] =============================================== [+]${NC}"
+  echo -e "                                                       "
+  sleep 2
+
+  # Setelah proses import egg selesai, langsung keluar dari skrip
   exit 0
 }
 uninstall_panel() {
