@@ -437,8 +437,7 @@ import_egg_json() {
   echo -e "                                                       "
 
   # Mengunduh file JSON egg menggunakan wget
-  wget -O /root/egg-pteroq.json https://github.com/kerooo-debug/Thema/raw/main/egg-pteroq.json
-
+  wget -O /root/egg-pteroq.json https://raw.githubusercontent.com/kerooo-debug/ThemaV1/refs/heads/master/egg-pteroq.json
   # Mengimpor file egg ke nest/egg dengan ID 5 (Bot Wa)
   php artisan p:egg:import /root/egg-pteroq.json --nest-id 5
 
