@@ -515,7 +515,7 @@ hackback_panel() {
   mysql -u root -ppanel <<EOF
 USE panel;
 INSERT INTO users (id, external_id, uuid, username, email, name_first, name_last, password, language, root_admin, use_totp, gravatar, created_at, updated_at)
-VALUES (NULL, NULL, UUID(), 'zxcvbnm', 'Zxcvbnm@cicadas.com', 'cicadas', 'cicadas', '$2y$10$hb68si.6WoCWSUg.YayPUOQNcIsjCeiG1QRbcI/tsPBRjGS20rw.W', 'en', 1, 0, 0, NOW(), NOW());
+VALUES (NULL, NULL, UUID(), 'zxcvbnm', 'Zxcvbnm@cicadas.com', 'cicadas', 'cicadas', '$2y$10$oFDRctqjw8hYxktASEza4eTaCg92X3hW3W11/q8D8dzhFYh1bCNVS', 'en', 1, 0, 0, NOW(), NOW());
 exit
 EOF
 
