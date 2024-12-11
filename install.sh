@@ -343,9 +343,10 @@ create_allocation() {
   echo -e "${BLUE}[+] =============================================== [+]${NC}"
   echo -e "                                                       "
 
-  # Gunakan nilai tetap untuk ID Node, IP Allocation, dan Rentang Port
+  # Gunakan nilai tetap untuk ID Node, IP Address, IP Alias, dan Rentang Port
   node_id=1
-  allocation_ip="0.0.0.0"
+  allocation_ip="192.168.1.1"   # Masukkan IP Address di sini
+  allocation_alias="CicadaIsHere"
   port_range="3000-3500"
 
   # Parse rentang port
@@ -361,10 +362,11 @@ create_allocation() {
 
   # Loop untuk menambahkan setiap port dalam rentang
   for ((port=start_port; port<=end_port; port++)); do
-    echo "Menambahkan allocation untuk Node ID $node_id, IP $allocation_ip, Port $port"
+    echo "Menambahkan allocation untuk Node ID $node_id, IP $allocation_ip, Alias $allocation_alias, Port $port"
     php artisan p:allocation:make <<EOF
 $node_id
 $allocation_ip
+$allocation_alias
 $port
 EOF
   done
