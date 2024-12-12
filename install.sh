@@ -331,55 +331,8 @@ EOF
   echo -e "                                                       "
   sleep 2
   clear
-  # Setelah node berhasil dibuat, panggil create_allocation
-  create_allocation
-}
-
-# Fungsi untuk create allocation
-create_allocation() {
-  echo -e "                                                       "
-  echo -e "${BLUE}[+] =============================================== [+]${NC}"
-  echo -e "${BLUE}[+]                 CREATE ALLOCATION                [+]${NC}"
-  echo -e "${BLUE}[+] =============================================== [+]${NC}"
-  echo -e "                                                       "
-
-  # Gunakan nilai tetap untuk ID Node, IP Address, IP Alias, dan Rentang Port
-  node_id=1
-  allocation_ip="192.168.1.1"   # Masukkan IP Address di sini
-  allocation_alias="CicadaIsHere"
-  port_range="3000-3500"
-
-  # Parse rentang port
-  IFS="-" read -ra PORTS <<< "$port_range"
-  start_port=${PORTS[0]}
-  end_port=${PORTS[1]}
-
-  # Periksa apakah rentang valid
-  if [[ -z $start_port || -z $end_port || $start_port -gt $end_port ]]; then
-    echo "Rentang port tidak valid. Pastikan formatnya seperti 3000-3100."
-    exit 1
-  fi
-
-  # Loop untuk menambahkan setiap port dalam rentang
-  for ((port=start_port; port<=end_port; port++)); do
-    echo "Menambahkan allocation untuk Node ID $node_id, IP $allocation_ip, Alias $allocation_alias, Port $port"
-    php artisan p:allocation:make <<EOF
-$node_id
-$allocation_ip
-$allocation_alias
-$port
-EOF
-  done
-
-  echo -e "                                                       "
-  echo -e "${GREEN}[+] =============================================== [+]${NC}"
-  echo -e "${GREEN}[+]          CREATE ALLOCATION SUKSES                [+]${NC}"
-  echo -e "${GREEN}[+] =============================================== [+]${NC}"
-  echo -e "                                                       "
-  sleep 2
-  clear
-
-  # Setelah allocation berhasil dibuat, panggil delete egg
+  # Setelah node berhasil dibuat, panggil delete eggs
+ 
   delete_eggs
 }
 
