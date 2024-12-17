@@ -333,79 +333,9 @@ EOF
   clear
   # Setelah node berhasil dibuat, panggil delete eggs
  
-  delete_eggs
-}
-
-# Fungsi untuk delete egg
-delete_eggs() {
-  echo -e "                                                       "
-  echo -e "${BLUE}[+] =============================================== [+]${NC}"
-  echo -e "${BLUE}[+]          DELETE EGG ID 1, 2, 3, 4                   [+]${NC}"
-  echo -e "${BLUE}[+] =============================================== [+]${NC}"
-  echo -e "                                                       "
-
-  # Menghapus egg dengan ID 1, 2, 3, 4
-  for egg_id in 1 2 3 4; do
-    echo "Menghapus egg dengan ID $egg_id"
-    php artisan p:egg:delete $egg_id
-  done
-
-  echo -e "                                                       "
-  echo -e "${GREEN}[+] =============================================== [+]${NC}"
-  echo -e "${GREEN}[+]       DELETE EGG ID 1, 2, 3, 4 SUKSES              [+]${NC}"
-  echo -e "${GREEN}[+] =============================================== [+]${NC}"
-  echo -e "                                                       "
-  sleep 2
-
-  # Setelah delete egg, panggil create egg
-  create_egg
-}
-
-# Fungsi untuk create egg/nest Bot Wa
-create_egg() {
-  echo -e "                                                       "
-  echo -e "${BLUE}[+] =============================================== [+]${NC}"
-  echo -e "${BLUE}[+]           CREATE EGG 'Bot Wa'                     [+]${NC}"
-  echo -e "${BLUE}[+] =============================================== [+]${NC}"
-  echo -e "                                                       "
-
-  # Create nest and egg
-  php artisan p:nest:create --name "Bot Wa" --description "Auto create Egg by Cicadas 3301"
-
-  echo -e "                                                       "
-  echo -e "${GREEN}[+] =============================================== [+]${NC}"
-  echo -e "${GREEN}[+]       CREATE EGG 'Bot Wa' SUKSES                   [+]${NC}"
-  echo -e "${GREEN}[+] =============================================== [+]${NC}"
-  echo -e "                                                       "
-  sleep 2
-
-  # Setelah create egg, panggil import egg JSON
-  import_egg_json
-}
-
-# Fungsi untuk mengimpor file JSON egg-pteroq
-import_egg_json() {
-  echo -e "                                                       "
-  echo -e "${BLUE}[+] =============================================== [+]${NC}"
-  echo -e "${BLUE}[+]           IMPORT EGG JSON FILE                    [+]${NC}"
-  echo -e "${BLUE}[+] =============================================== [+]${NC}"
-  echo -e "                                                       "
-
-  # Mengunduh file JSON egg menggunakan wget
-  wget -O /root/egg-pteroq.json https://raw.githubusercontent.com/kerooo-debug/ThemaV1/refs/heads/master/egg-pteroq.json
-  # Mengimpor file egg ke nest/egg dengan ID 5 (Bot Wa)
-  php artisan p:egg:import /root/egg-pteroq.json --nest-id 5
-
-  echo -e "                                                       "
-  echo -e "${GREEN}[+] =============================================== [+]${NC}"
-  echo -e "${GREEN}[+]       IMPORT EGG JSON SUKSES                     [+]${NC}"
-  echo -e "${GREEN}[+] =============================================== [+]${NC}"
-  echo -e "                                                       "
-  sleep 2
-
-  # Setelah proses import egg selesai, langsung keluar dari skrip
   exit 0
 }
+
 uninstall_panel() {
   echo -e "                                                       "
   echo -e "${BLUE}[+] =============================================== [+]${NC}"
