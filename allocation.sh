@@ -5,11 +5,12 @@ node_id="1"
 ip_address="0.0.0.0"
 port="3000-3200"
 
-# Meminta API token dari pengguna
+# Meminta input domain dan API token dari pengguna
+read -p "Masukkan Domain (tanpa https://): " domain
 read -p "Masukkan Bearer Token (API Key): " api_token
 
 # Endpoint API
-endpoint="https://panel.domain.com/api/application/nodes/$node_id/allocations"
+endpoint="https://$domain/api/application/nodes/$node_id/allocations"
 
 # Membuat Allocation menggunakan API
 response=$(curl -s -X POST "$endpoint" \
